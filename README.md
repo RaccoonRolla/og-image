@@ -60,9 +60,6 @@ You'll want to fork this repository and deploy your own image generator.
 7. Deploy to the cloud by running `vercel` and you'll get a unique URL
 8. Connect [Vercel for GitHub](https://vercel.com/github) to automatically deploy each time you `git push` 🚀
 
-
-test
-
 ## Authors
 
 - Steven ([@styfle](https://twitter.com/styfle)) - [Vercel](https://vercel.com)
