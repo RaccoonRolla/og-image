@@ -3,6 +3,8 @@ import { readFileSync } from 'fs';
 import { marked } from 'marked';
 import { sanitizeHtml } from './sanitizer';
 import { ParsedRequest } from './types';
+//@ts-ignore
+import * as logo from '../../public/atlas-logo.png';
 const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
@@ -39,12 +41,11 @@ function getCss(fontSize: string) {
 
     body {
         background: ${background};
-        background-size: 100px 100px;
-        height: 100vh;
+        height: 628px;
         display: flex;
         text-align: center;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
     }
 
     code {
@@ -60,14 +61,11 @@ function getCss(fontSize: string) {
 
     .logo-wrapper {
         display: flex;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        justify-items: center;
-    }
-
-    .logo {
-        margin: 0 75px;
+        align-items: start;
+        align-content: start;
+        justify-content: start;
+        justify-items: start;
+        margin-left: 106px;
     }
 
     .plus {
@@ -77,7 +75,7 @@ function getCss(fontSize: string) {
     }
 
     .spacer {
-        margin: 150px;
+        margin: 92px;
     }
 
     .emoji {
@@ -97,22 +95,19 @@ function getCss(fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, md, fontSize, images, widths, heights } = parsedReq;
+    const { text, md, fontSize } = parsedReq;
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=1200px, initial-scale=1">
     <style>
         ${getCss(fontSize)}
     </style>
     <body>
         <div>
-            <div class="spacer">
             <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
+                <img src="/assets/atlas-logo.png" alt="Atlas logo" width={300} height={58}>
             </div>
             <div class="spacer">
             <div class="heading">${emojify(
@@ -122,18 +117,4 @@ export function getHtml(parsedReq: ParsedRequest) {
         </div>
     </body>
 </html>`;
-}
-
-function getImage(src: string, width ='auto', height = '51') {
-    return `<img
-        class="logo"
-        alt="Generated Image"
-        src="${sanitizeHtml(src)}"
-        width="${sanitizeHtml(width)}"
-        height="${sanitizeHtml(height)}"
-    />`
-}
-
-function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
 }
