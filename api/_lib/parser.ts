@@ -5,7 +5,7 @@ import { ParsedRequest } from './types';
 export function parseRequest(req: IncomingMessage) {
     console.log('HTTP ' + req.url);
     const { pathname, query } = parse(req.url || '/', true);
-    const { fontSize, images, widths, heights, md } = (query || {});
+    const { fontSize, images, widths, heights, md, description } = (query || {});
 
     if (Array.isArray(fontSize)) {
         throw new Error('Expected a single fontSize');
@@ -31,6 +31,7 @@ export function parseRequest(req: IncomingMessage) {
         images: getArray(images),
         widths: getArray(widths),
         heights: getArray(heights),
+        description: getArray(description),
     };
     parsedRequest.images = getDefaultImages(parsedRequest.images);
     return parsedRequest;
@@ -47,7 +48,7 @@ function getArray(stringOrArray: string[] | string | undefined): string[] {
 }
 
 function getDefaultImages(images: string[]): string[] {
-    const defaultImage = 'http://dl3.joxi.net/drive/2022/02/21/0015/0187/1007803/03/a7d52bc713.jpg'
+    const defaultImage = 'https://og-image-git-test-changes-raccoonrolla.vercel.app//atlas-logo.png'
 
     if (!images || !images[0]) {
         return [defaultImage];
